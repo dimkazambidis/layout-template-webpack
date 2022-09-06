@@ -1,0 +1,63 @@
+/**  Base */
+
+*
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+    &:before, &:after
+        -webkit-box-sizing: border-box
+        -moz-box-sizing: border-box
+        box-sizing: border-box
+
+*::-webkit-input-placeholder
+    color: $color-placeholder
+    opacity: 1
+
+*:-moz-placeholder
+    color: $color-placeholder
+    opacity: 1
+
+*::-moz-placeholder
+    color: $color-placeholder
+    opacity: 1
+
+*:-ms-input-placeholder
+    color: $color-placeholder
+    opacity: 1
+
+// If you don't need smooth scrolling
+// @media (prefers-reduced-motion: no-preference)
+//     :root
+//         scroll-behavior: auto
+
+html
+    height: 100%
+    font-size: $fz-base + px
+    line-height: $lh-base
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+    color: $color-danger
+body input:required:valid,
+body textarea:required:valid
+    color: $color-success
+
+body
+    height: 100%
+    min-width: 320px
+    position: relative
+    font-family: $font-default
+    color: $color-text
+    font-size: $fz-base + px
+    line-height: $lh-base
+
+@include media-xl
+    *::-webkit-scrollbar
+        width: 8px
+    *::-webkit-scrollbar-track
+        background: $color-placeholder
+    *::-webkit-scrollbar-thumb
+        background-color: $color-accent
+    *
+        scrollbar-width: thin
+        scrollbar-color: $color-accent $color-placeholder

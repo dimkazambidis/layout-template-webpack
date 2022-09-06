@@ -1,0 +1,39 @@
+//==============  MOBILE FIRST (min-width)  ==============//
+
+@mixin media-xxl
+  @media (min-width: map-get($grid-breakpoints, xxl))
+    @content
+  
+@mixin media-xl
+  @media (min-width: map-get($grid-breakpoints, xl))
+    @content
+
+@mixin media-lg
+  @media (min-width: map-get($grid-breakpoints, lg))
+    @content
+
+@mixin media-md
+  @media (min-width: map-get($grid-breakpoints, md))
+    @content
+
+@mixin media-sm
+  @media (min-width: map-get($grid-breakpoints, sm))
+    @content
+	
+//==============  DESKTOP FIRST (max-width)  ==============//
+
+@mixin media-xl-df
+  @media (max-width: map-get($grid-breakpoints, xl) - 1px)
+    @content
+
+@mixin media-lg-df
+  @media (max-width: map-get($grid-breakpoints, lg) - 1px)
+    @content
+
+@mixin media-md-df
+  @media (max-width: map-get($grid-breakpoints, md) - 1px)
+    @content
+
+@mixin media-sm-df
+  @media (max-width: map-get($grid-breakpoints, sm) - 1px)
+    @content
