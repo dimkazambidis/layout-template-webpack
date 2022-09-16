@@ -14,7 +14,7 @@
   <meta name="msapplication-navbutton-color" content="#ccc">
   <meta name="apple-mobile-web-app-status-bar-style" content="#ccc">
   <meta name="format-detection" content="telephone=no">
-<link href="css/main.css?v=68c2de8b476a4f6e57e2" rel="stylesheet"></head>
+<link href="css/main.css?v=a046c2657e9a08947b0d" rel="stylesheet"></head>
   <body>
     <div class="site">
 <header class="site-header">Header may become fixed
@@ -42,14 +42,18 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
               <h2>List default</h2>
               <ul>
-                <li><a href="#" data-popup data-popup-src="#popup-center" data-popup-pos="center">Popup Center</a></li>
-                <li><a href="#" data-popup data-popup-src="#popup-top" data-popup-pos="top">Popup Top</a></li>
-                <li><a href="#" data-popup data-popup-src="#popup-bottom" data-popup-pos="bottom">Popup Bottom</a></li>
-                <li><a href="#" data-popup data-popup-src="#popup-left" data-popup-pos="left">Popup Left</a></li>
-                <li><a href="#" data-popup data-popup-src="#popup-right" data-popup-pos="right">Popup Right</a></li>
-                <li><a href="#" data-popup>Popup Default</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="center">Popup Center</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="top">Popup Top</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="bottom">Popup Bottom</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="left">Popup Left</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="right">Popup Right</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="top left">Popup Top Left</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="top right">Popup Top Right</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="bottom left">Popup Bottom Left</a></li>
+                <li><a href="#" data-popup data-popup-src="#popup" data-popup-pos="bottom right">Popup Bottom Right</a></li>
+                <li><a href="#" data-popup>Popup No Content</a></li>
               </ul>
-              <h2>List unstyled (class="unstyled")</h2>
+              <h2>List unstyled (class = "unstyled")</h2>
               <ul class="unstyled">
                 <li>Lorem ipsum</li>
                 <li>Lorem ipsum</li>
@@ -63,21 +67,13 @@
         </div>
       </div>
 <footer class="site-footer">Footer pressed to the bottom</footer>
-      <div id="popup-top">Popup Top
-        <div><a href="#" data-popup-close>Close </a></div>
+      <div id="popup">Some Content
+        <div><a href="#" data-popup-close>
+            <apan>Close</apan></a><br><a href="#" data-popup data-popup-src="#aaa" data-popup-pos="center">Popup Center</a></div>
       </div>
-      <div id="popup-left">Popup Left
-        <div><a href="#" data-popup-close>Close </a></div>
-      </div>
-      <div id="popup-right">Popup Right
-        <div><a href="#" data-popup-close>Close </a></div>
-      </div>
-      <div id="popup-bottom">Popup Bottom
-        <div><a href="#" data-popup-close>Close </a></div>
-      </div>
-      <div id="popup-center">Popup Center
-        <div><a href="#" data-popup-close>Close </a></div>
+      <div id="aaa">AAA!!!
+        <div><a href="#" data-popup-close>Close</a></div>
       </div>
     </div>
-  <script src="js/main.js?v=68c2de8b476a4f6e57e2"></script></body>
+  <script src="js/main.js?v=a046c2657e9a08947b0d"></script></body>
 </html>

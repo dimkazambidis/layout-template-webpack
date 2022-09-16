@@ -1,13 +1,18 @@
 /**  Popup */
     
-body.popup-on
-    max-height: 100%
-    overflow: hidden
+body
+    &._cstm-popup-on
+        max-height: 100%
+        overflow: hidden
+    &._cstm-popup-padding
+        padding-right: var(--scroll-bar-width)
 
 .cstm-popup-list
     display: none
 
 .cstm-popup
+    display: flex
+    align-items: center
     overflow: hidden
     visibility: hidden
     opacity: 0
@@ -17,26 +22,8 @@ body.popup-on
     right: 0
     bottom: 0
     z-index: 9999
-    transition: opacity .2s .25s, visibility .2s 25s
-    &.center
-        .cstm-popup-container
-            align-items: center
-    &.top
-        .cstm-popup-container
-            align-items: flex-start
-    &.bottom
-        .cstm-popup-container
-            align-items: flex-end
-    &.left
-        .cstm-popup-container
-            justify-content: flex-start
-    &.right
-        .cstm-popup-container
-            justify-content: flex-end
-    &.visible
-        visibility: visible
-        opacity: 1
-        transition: opacity .2s, visibility .2s
+    transition: opacity .2s .25s, visibility .2s .25s
+    overflow: hidden
 
 .cstm-popup-darker
     position: absolute
@@ -46,83 +33,75 @@ body.popup-on
     bottom: 0
     background-color: rgba(0, 0, 0, 0.75)
 
-.cstm-popup-wrapper
-    padding: 20px
-    position: absolute
-    top: 0
-    left: 0
-    right: 0
-    bottom: 0
-    overflow: auto
-
-.cstm-popup-container
-    display: flex
-    align-items: center
-    justify-content: center
-    min-height: 100%
-
 .cstm-popup-main
-    opacity: 0
-    position: relative
-    background-color: #fff
+    display: flex
+    justify-content: center
     padding: 20px
+    width: 100%
+
+.cstm-popup-content
+    opacity: 0
     transition: all .25s
 
-.cstm-popup.visible .cstm-popup-main
-    opacity: 1
-    transition: all .25s .25s
+.cstm-popup._visible
+    .cstm-popup-content
+        opacity: 1
+        transition: all .25s .25s
 
 .cstm-popup
     &.center
-        .cstm-popup-wrapper
-            .cstm-popup-main
-                transform: scale(0.5)
-        &.visible
-            .cstm-popup-wrapper
-                .cstm-popup-main
-                    transform: scale(1)
+        align-items: center
+        .cstm-popup-content
+            transform: scale(0.5)
+        &._visible
+            .cstm-popup-content
+                transform: scale(1)
     &.top
-        .cstm-popup-wrapper
+        align-items: flex-start
+        .cstm-popup-main
             padding-top: 0
-            overflow: hidden
-            .cstm-popup-main
-                transform: translateY(-100%)
-        &.visible
-            .cstm-popup-wrapper
-                .cstm-popup-main
-                    transform: translateY(0)
+        .cstm-popup-content
+            transform: translateY(-100%)
+        &._visible
+            .cstm-popup-content
+                transform: translateY(0)
     &.bottom
-        .cstm-popup-wrapper
+        align-items: flex-end
+        .cstm-popup-main
             padding-bottom: 0
-            overflow: hidden
-            .cstm-popup-main
-                transform: translateY(100%)
-        &.visible
-            .cstm-popup-wrapper
-                .cstm-popup-main
-                    transform: translateY(0)
+        .cstm-popup-content
+            transform: translateY(100%)
+        &._visible
+            .cstm-popup-content
+                transform: translateY(0)
     &.left
-        .cstm-popup-wrapper
+        .cstm-popup-main
+            justify-content: flex-start
             padding-left: 0
-            overflow: hidden
-            .cstm-popup-main
-                transform: translateX(-100%)
-        &.visible
-            .cstm-popup-wrapper
-                .cstm-popup-main
-                    transform: translateX(0)
+        .cstm-popup-content
+            transform: translateX(-100%)
+        &._visible
+            .cstm-popup-content
+                transform: translateX(0)
     &.right
-        .cstm-popup-wrapper
+        .cstm-popup-main
+            justify-content: flex-end
             padding-right: 0
-            overflow: hidden
-            .cstm-popup-main
-                transform: translateX(100%)
-        &.visible
-            .cstm-popup-wrapper
-                .cstm-popup-main
-                    transform: translateX(0)
+        .cstm-popup-content
+            transform: translateX(100%)
+        &._visible
+            .cstm-popup-content
+                transform: translateX(0)
+    &._visible
+        visibility: visible
+        opacity: 1
+        transition: opacity .2s, visibility .2s
 
 .cstm-popup-close
     position: absolute
     top: 0
     right: 0
+
+.cstm-popup-content
+    padding: 20px
+    background-color: #fff

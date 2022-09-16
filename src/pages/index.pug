@@ -37,42 +37,70 @@ html(lang="ru")
                                     a(
                                         href="#"
                                         data-popup
-                                        data-popup-src="#popup-center"
+                                        data-popup-src="#popup"
                                         data-popup-pos="center"
                                     ) Popup Center
                                 li
                                     a(
                                         href="#"
                                         data-popup
-                                        data-popup-src="#popup-top"
+                                        data-popup-src="#popup"
                                         data-popup-pos="top"
                                     ) Popup Top
                                 li
                                     a(
                                         href="#"
                                         data-popup
-                                        data-popup-src="#popup-bottom"
+                                        data-popup-src="#popup"
                                         data-popup-pos="bottom"
                                     ) Popup Bottom
                                 li
                                     a(
                                         href="#"
                                         data-popup
-                                        data-popup-src="#popup-left"
+                                        data-popup-src="#popup"
                                         data-popup-pos="left"
                                     ) Popup Left
                                 li
                                     a(
                                         href="#"
                                         data-popup
-                                        data-popup-src="#popup-right"
+                                        data-popup-src="#popup"
                                         data-popup-pos="right"
                                     ) Popup Right
                                 li
                                     a(
                                         href="#"
                                         data-popup
-                                    ) Popup Default
+                                        data-popup-src="#popup"
+                                        data-popup-pos="top left"
+                                    ) Popup Top Left
+                                li
+                                    a(
+                                        href="#"
+                                        data-popup
+                                        data-popup-src="#popup"
+                                        data-popup-pos="top right"
+                                    ) Popup Top Right
+                                li
+                                    a(
+                                        href="#"
+                                        data-popup
+                                        data-popup-src="#popup"
+                                        data-popup-pos="bottom left"
+                                    ) Popup Bottom Left
+                                li
+                                    a(
+                                        href="#"
+                                        data-popup
+                                        data-popup-src="#popup"
+                                        data-popup-pos="bottom right"
+                                    ) Popup Bottom Right
+                                li
+                                    a(
+                                        href="#"
+                                        data-popup
+                                    ) Popup No Content
 
                             h2 List unstyled (class = "unstyled")
                             ul.unstyled
@@ -85,18 +113,17 @@ html(lang="ru")
 
             include includes/footer.pug
 
-            #popup-top Popup Top
+            #popup Some Content
                 div
-                    a(href="#" data-popup-close) Close 
-            #popup-left Popup Left
+                    a(href="#" data-popup-close)
+                        apan Close
+                    br
+                    a(
+                        href="#"
+                        data-popup
+                        data-popup-src="#aaa"
+                        data-popup-pos="center"
+                    ) Popup Center
+            #aaa AAA!!!
                 div
-                    a(href="#" data-popup-close) Close 
-            #popup-right Popup Right
-                div
-                    a(href="#" data-popup-close) Close 
-            #popup-bottom Popup Bottom
-                div
-                    a(href="#" data-popup-close) Close 
-            #popup-center Popup Center
-                div
-                    a(href="#" data-popup-close) Close 
+                    a(href="#" data-popup-close) Close

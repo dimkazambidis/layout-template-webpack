@@ -1,315 +1,256 @@
-/**
- * Element.closest() polyfill
-*/
-if ( !Element.prototype.closest ) {
-    if ( !Element.prototype.matches ) {
-        Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-    }
-    Element.prototype.closest = function (s) {
-        let el = this;
-        let ancestor = this;
-
-    if ( !document.documentElement.contains(el) ) return null;
-        do {
-            if ( ancestor.matches(s) ) return ancestor;
-                ancestor = ancestor.parentElement;
-        } while ( ancestor !== null ) {
-            return null;
-        }
-    }
+// Scrollbar width
+function widthScrollBar() {
+    const srollBar = window.innerWidth - document.body.clientWidth;
+    document.documentElement.style.setProperty('--scroll-bar-width', `${srollBar}px`);
 }
+widthScrollBar();
 
-let activeExamples = [];
+window.addEventListener('resize', () => {
+    widthScrollBar();
+});
 
+// Default options
 const settings = {
-    src: '',
-    position: 'center',
-    content: '',
+    src: '', // Selector for Popup content
+    activator: '[data-popup]', // Selector for Popup activator
+    position: 'center', // Position (center, top, left, rigt, bottom)
+    contentElement: null, // Element for Popup content (for example result Ajax request)
+    text: '', // Text for Popup content (String)
+    contentNotFound: 'Content not found', // If Conten Not Found
     closeTemplate: 'Close',
+    // duration: 600,
     beforeShow( popup ) {},
     afterShow( popup ) {},
     beforeHide( popup ) {},
     afterHide( popup ) {}
 }
 
-export default function Popup( options = {} ) {
-    let selfPopup = this;
+// Array with Active popups
+let activePopups = [];
 
-    this.activePopup = [];
-    this.selector = '[data-popup]';
-    this.options = options;
-    this.options.__proto__ = settings;
+export class Popup {
+    constructor( options = {} ) {
+        this.options = options;
+        this.options.__proto__ = settings;
+    }
 
-    this.init = function( selector = this.selector, options = {} ) {
-        options.__proto__ = this.options;
+    init( params = {} ) {
+        const context = this;
 
-        let popupCreate = this.popupCreate;
-        
-        let activators = document.querySelectorAll( selector );
-        for ( let i = 0; i < activators.length; i++ ) {
-            let activator = activators[i];
+        let options = Object.assign( {}, params );
+        options.__proto__ = settings;
+        context.options = options;
 
-            let dataSrc = activator.getAttribute( 'data-popup-src' );
-            let src = ( dataSrc ) ? dataSrc : options.src;
+        const activators = document.querySelectorAll( options.activator );
+        const contentElements = context.getContentElements();
 
-            let dataPos = activator.getAttribute( 'data-popup-pos' );
-            let pos = ( dataPos ) ? dataPos : options.position;
+        // Hide content elements
+        context.hideContentElements( contentElements );
 
-            let content;
-            let contentHasElement;
-            let popupId = i;
-            
-            if ( src ) {
-                content = document.querySelector( src );
-                if ( content ) {
-                    content.style.display = 'none';
+        // Handling activators
+        if ( activators.length ) {
+            activators.forEach( activator => {
+                let showOptions = {};
+
+                // Get src
+                const dataSrc = activator.getAttribute( 'data-popup-src' );
+                showOptions.src = ( dataSrc ) ? dataSrc : options.src;
+                
+                // Get position
+                const dataPosition = activator.getAttribute( 'data-popup-pos' );
+                showOptions.position = ( dataPosition ) ? dataPosition : options.position;
+
+                // Click on Activator
+                activator.addEventListener( 'click', function(e) {
+                    e.preventDefault();
+
+                    context.show( showOptions );
+                }, false );
+            })
+        }
+    }
+
+    getInlineContent( options ) {
+        const contentInline = ( options.text ) ? options.text : options.contentNotFound;
+        const contentElement = document.createElement( 'div' );
+
+        contentElement.classList.add( 'cstm-popup-content' );
+        contentElement.textContent = contentInline;
+
+        return contentElement;
+    }
+
+    getContentElements() {
+        const options = this.options;
+        const activators = document.querySelectorAll( options.activator );
+        let contentElements = [];
+
+        if ( activators.length ) { // Elements in attribute data-popup-src
+            activators.forEach( activator => {
+                const src = activator.getAttribute( 'data-popup-src' );
+                const element = document.querySelector( src );
+
+                if ( element && contentElements.indexOf( element ) === -1 ) {
+                    contentElements.push( element );
                 }
-                contentHasElement = src;
-            } else {
-                content = options.content;
-                contentHasElement = '';
+            })
+        }
+
+        if ( options.src ) { // Element in options src
+            const optionSrc = document.querySelector( options.src );
+
+            if ( optionSrc && contentElements.indexOf( optionSrc ) === -1 ) {
+                contentElements.push( optionSrc );
             }
+        }
 
-            // Click Activator
-            activator.addEventListener( 'click', function(e) {
-                e.preventDefault();
+        return contentElements;
+    }
 
-                let popup = popupCreate(
-                    content,
-                    contentHasElement,
-                    popupId,
-                    pos,
-                    options
-                );
-                popupIn( popup );
+    hideContentElements( elements ) {
+        elements.forEach( element => {
+            element.style.display = 'none';
+            element.classList.add( 'cstm-popup-content' );
+        });
+    }
+
+    hideListener( e ) {
+        e.preventDefault();
+
+        const popup = e.currentTarget.popup;
+        const context = e.currentTarget.context;
+
+        context.hide( {}, popup );
+    }
+
+    popupConsruction( content, options ) {
+        const context = this;
+        const templateElement = document.createElement( 'template' );
+        const template = '<div class="cstm-popup ' + options.position + '">' +
+                            '<div class="cstm-popup-main">' +
+                                '<div class="cstm-popup-darker" data-popup-close></div>' +
+                            '</div>' +
+                        '</div>';
+
+        templateElement.innerHTML = template;
+        const popup = templateElement.content.firstChild;
+
+        let placeholder = '';
+        const contentElements = context.getContentElements();
+        if ( contentElements.indexOf( content ) !== -1 ) {
+            placeholder = document.createElement( 'div' );
+            placeholder.classList.add( 'cstm-popup-placeholder' );
+            content.before( placeholder );
+        }
+
+        popup.content = content;
+        popup.placeholder = placeholder;
+        activePopups.push( popup );
+
+        const main = popup.querySelector( '.cstm-popup-main' );
+        main.append( content );
+        content.style.display = '';
+
+        const closers = popup.querySelectorAll( '[data-popup-close]' );
+
+        if ( closers.length ) {
+            closers.forEach( closer => {
+                closer.popup = popup;
+                closer.context = context;
+                closer.addEventListener( 'click', context.hideListener, false);
+            });
+        }
+
+        return popup;
+    }
+ 
+    popupDeconsruction( popup ) {
+        const context = this;
+        const content = popup.content;
+        const placeholder = popup.placeholder;
+
+        // Content Element return to its place
+        if ( placeholder ) {
+            placeholder.before( content );
+            content.style.display = 'none';
+            placeholder.remove();
+        }
+
+        // Remove Listener on Click event
+        const closers = popup.querySelectorAll( '[data-popup-close]' );
+
+        if ( closers.length ) {
+            closers.forEach( closer => {
+                closer.popup = popup;
+                closer.removeEventListener( 'click', context.hideListener, false);
             });
         }
     }
-    this.show = function( options = {} ) {
+
+    show( params = {} ) {
+        let options = Object.assign( {}, params );
+        options.__proto__ = this.options;
+        
+        // Blocking scroll
+        const srollBar = window.innerWidth - document.body.clientWidth;
+        if ( srollBar ) {
+            document.body.classList.add( '_cstm-popup-padding' );
+        }
+
+        if ( !activePopups.length ) {
+            document.body.classList.add( '_cstm-popup-on' );
+        }
+
+        // Get content
+        const contentElement = ( options.src ) ? document.querySelector( options.src ) : options.contentElement;
+        const content = ( contentElement ) ? contentElement : this.getInlineContent( options );
+        const popup = this.popupConsruction( content, options );
+        popup.options = options;
+
+        // Show popup
+        options.beforeShow( popup );
+        document.body.append( popup );
+
+        setTimeout( function() {
+            popup.classList.add( '_visible' );
+
+            setTimeout( function() {
+                options.afterShow( popup );
+            }, 450);
+        }, 50);
+    }
+
+    hide( params = {}, popup = activePopups[ activePopups.length - 1 ] ) {
+        let context = this;
+        let options = Object.assign( {}, params );
         options.__proto__ = this.options;
 
-        let popupCreate = this.popupCreate;
-
-        let content = ( options.src ) ? document.querySelector( options.src ) : options.content;
-        let position = ( options.position ) ? options.position : 'center';
-        let contentHasElement = ( options.src ) ? options.src : '';
-        let popup = popupCreate( content, contentHasElement, 'single', position, options );
-
-        popupIn( popup );
-    }
-    this.hide = function() {
-        let countActivePopup = selfPopup.activePopup.length;
-        if ( countActivePopup > 0 ) {
-            popupOut( selfPopup.activePopup[ countActivePopup - 1 ] );
-        }
-    }
-    this.hideAll = function() {
-        for ( let i = 0; i < activeExamples.length; i++ ) {
-            activeExamples[i].hide();
-            //console.log( activeExamples[i].activePopup );
-            // let actPopupList = activeExamples[i].activePopup;
-            // for ( let i = 0; i < actPopupList.length; i++ ) {
-            //     let actPopup = actPopupList[i];
-            //     popupOut( actPopup );
-            // }
-        }
-    }
-    this.popupCreate = function( content, contentHasElement, popupID, position, options ) {
-        let popup = document.createElement( 'div' );
-        let darker = document.createElement( 'div' );
-        let wrapper = document.createElement( 'div' );
-        let container = document.createElement( 'div' );
-        let contentContainer = document.createElement( 'div' );
-        
-        popup.classList.add( 'cstm-popup', position );
-        popup.setAttribute('data-popup-for', contentHasElement);
-        popup.setAttribute('id', popupID);
-        popup.setAttribute( 'data-popup-index', indexPopup() );
-        darker.classList.add( 'cstm-popup-darker' );
-        wrapper.classList.add( 'cstm-popup-wrapper' );
-        container.classList.add( 'cstm-popup-container' );
-        contentContainer.classList.add( 'cstm-popup-main' );
-
-        popup.append( darker, wrapper );
-        wrapper.append( container );
-        container.append( contentContainer );
-
-        // if ( options.closeTemplate ) {
-        //     let close = document.createElement( 'a' );
-        //     close.classList.add( 'cstm-popup-close' );
-        //     close.setAttribute( 'href', '#' );
-        //     close.innerHTML = options.closeTemplate; // Tpl of close button
-        //     contentContainer.append( close );
-        // }
-
-        if ( contentHasElement ) {
-            let placeholder = document.createElement( 'div' );
-            placeholder.classList.add( 'cstm-popup-placeholder' );
-            placeholder.setAttribute( 'from-id', popupID );
-            content.before( placeholder );
-            content.style.display = '';
-        }
-        contentContainer.append( content );
-
-        let closers = popup.querySelectorAll( '[data-popup-close]' );
-        for ( let i = 0; i < closers.length; i++ ) {
-            let closer = closers[i];
-
-            closer.addEventListener( 'click', function(e) {
-                e.preventDefault();
-
-                popupOut( popup );
-            });
-        }
-        popup.addEventListener( 'click', function(e) {
-            let pathParents = e.path || (e.composedPath && e.composedPath());
-            let pos = pathParents.indexOf( content );
-            if ( pos === -1 ) {
-                popupOut( popup )
-            }
-        });
-
-        return popup
-    }
-
-    function popupIn( popup ) {
-        let popupsVisible = document.querySelectorAll('.cstm-popup.visible');
-        let popupsVisibleCount = popupsVisible.length;
-
-        document.body.appendChild( popup );
-        selfPopup.options.beforeShow( popup );
-    
-        // Fixed Body and hide scrollbar (fix content offset)
-        // let srollBar = window.innerWidth - document.body.clientWidth;
-        // let header = document.getElementById( 'site-header' );
-
-        //if ( !document.body.classList.contains( 'popup-on' ) ) {
-            // document.body.classList.add( 'popup-on' );
-            // document.body.style.paddingRight = srollBar + 'px';
-            // popup.style.paddingRight = srollBar + 'px';
-            // header.style.paddingRight = srollBar + 'px';
-        //}
-        activeExamples.push(selfPopup);
-        setTimeout(() => {
-            // Fixed Body and hide scrollbar (fix content offset)
-            let srollBar = window.innerWidth - document.body.clientWidth;
-            // let header = document.getElementById( 'site-header' );
-
-            popup.classList.add( 'visible' );
-            selfPopup.activePopup.push( popup );
-            selfPopup.options.afterShow( popup );
-
-            if ( popupsVisibleCount < 1 ) {
-                document.documentElement.classList.add( 'no-scroll' );
-                document.body.classList.add( 'popup-on' );
-                document.body.style.paddingRight = srollBar + 'px';
-                popup.style.paddingRight = srollBar + 'px';
-                // header.style.paddingRight = srollBar + 'px';
-
-                /////////////// Fix Scroll Body For Safari In
-                // if ( !document.body.hasAttribute('data-body-scroll') ) {
-                //     let scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-
-                //     document.body.setAttribute('data-body-scroll', scrollPos);
-                //     document.body.style.position = 'fixed';
-                //     document.body.style.top = '-' + scrollPos + 'px';
-                //     document.body.style.width = '100%';
-                // }
-            }
-        }, 50 );
-    }
-    
-    function popupOut( popup ) {
-        selfPopup.options.beforeHide( popup );
-        
-        // let header = document.getElementById( 'site-header' );
-        let hasElement = Boolean( popup.getAttribute('data-popup-for') );
-        // let popupsVisible = document.querySelectorAll('.cstm-popup.visible');
-        // let popupsVisibleCount = popupsVisible.length;
-        let content = popup.querySelector('.cstm-popup-main').childNodes[0];
-        let placeholder;
-    
-        popup.classList.remove( 'visible' );
-
-        // Remove event 'click' for closers * Start
-        let closers = popup.querySelectorAll( '[data-popup-close]' );
-        for ( let i = 0; i < closers.length; i++ ) {
-            let closer = closers[i];
-            let newCloser = closer.cloneNode( true );
-
-            closer.after( newCloser );
-            closer.remove();
-        }
-        // Remove event 'click' for closers * End
-        selfPopup.activePopup.pop();
-        activeExamples.pop();
-
-        // if ( popupsVisibleCount < 2 ) {
-        //     document.body.classList.remove('popup-on');
-        //     document.body.style.paddingRight = '';
-        //     header.style.paddingRight = '';
-        // }
-
-        // let popupsVisible = document.querySelectorAll('.cstm-popup.visible');
-        // let popupsVisibleCount = popupsVisible.length;
-        
-        // console.log( popupsVisibleCount );
-        // if ( popupsVisibleCount < 2 ) {
-        //     document.body.classList.remove('popup-on');
-        //     document.body.style.paddingRight = '';
-        //     header.style.paddingRight = '';
-        // }
+        options.beforeHide( popup );
+        popup.classList.remove( '_visible' );
         
         setTimeout( function() {
-            let popupsVisible = document.querySelectorAll('.cstm-popup.visible');
-            let popupsVisibleCount = popupsVisible.length;
+            const closedPopup = activePopups.filter( item => item === popup );
+            context.popupDeconsruction( closedPopup[0] );
 
-            if ( popupsVisibleCount < 1 ) {
-                document.documentElement.classList.remove( 'no-scroll' );
-                document.body.classList.remove('popup-on');
-                document.body.style.paddingRight = '';
-                
-                // window.scroll(0, scrollPosition);
-                // header.style.paddingRight = '';
-
-                ///////////////// Fix Scroll Body For Safari Out
-                // if ( document.body.hasAttribute('data-body-scroll') ) {
-                //     let scrollPos = document.body.getAttribute('data-body-scroll');
-
-                //     document.body.removeAttribute('data-body-scroll');
-
-                //     document.body.style.position = '';
-                //     document.body.style.top = '';
-                //     document.body.style.width = '';
-
-                //     window.scroll(0, scrollPos);
-                // }
-            }
-            
-            // If content is element, return to place
-            if ( hasElement ) {
-                placeholder = document.querySelector(`[from-id="${ popup.getAttribute('id') }"]`);
-                placeholder.after( content );
-                content.style.display = 'none'
-                placeholder.remove();
-            }
-
+            activePopups = activePopups.filter( item => item !== popup );
             popup.remove();
-            selfPopup.options.afterHide( popup );
-        }, 450 );
-    }
 
-    function indexPopup() {
-        let popupsVisible = document.querySelectorAll('.cstm-popup.visible');
-        let popupsVisibleCount = popupsVisible.length;
-        
-        return popupsVisibleCount;
+            options.afterHide( popup );
+
+            if ( !activePopups.length ) {
+                document.body.classList.remove( '_cstm-popup-on', '_cstm-popup-padding' );
+                widthScrollBar();
+            }
+        }, 450)
     }
 }
+let closePopup = new Popup();
 
-document.addEventListener('keydown', function(e) {
-    if ( e.code === 'Escape' && activeExamples.length > 0 ) {
-        let index = activeExamples.length - 1;
-        activeExamples[index].hide();
+document.addEventListener( 'keydown', function aaa(e) {
+    if ( e.code === 'Escape' && activePopups.length > 0 ) {
+        const popup = activePopups[ activePopups.length - 1 ];
+        const options = popup.options;
+
+        closePopup.hide( options, popup );
     }
 });
