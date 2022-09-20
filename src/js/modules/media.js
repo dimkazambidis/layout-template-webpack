@@ -1,133 +1,59 @@
-let media = {
-  xs: false,
-  sm: false,
-  md: false,
-  lg: false,
-  xl: false,
-  xxl: false
+const settings = {
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 1024,
+    xl: 1200
 }
 
-const configMedia = {
-  xs: '(min-width: 0)',
-  sm: '(min-width: 576px)',
-  md: '(min-width: 768px)',
-  lg: '(min-width: 1024px)',
-  xl: '(min-width: 1200px)',
-  xxl: '(min-width: 1366px)'
+const eventSet = {
+    to: function() {},
+    from: function() {}
 }
 
-const eventFunc = {
-  in: function() {},
-  out: function() {}
-}
-
-function mediaEvent( val, options = {} ) {
-  options.__proto__ = eventFunc;
-  let mediaArr = Object.entries( configMedia );
-  let mediaIndex = Object.keys( configMedia ).indexOf( val );
-  
-  if ( window.matchMedia( configMedia[val] ).matches ) {
-    options.in();
-  } else {
-    options.out();
-  }
-  
-  for ( let i = 0; i < mediaArr.length; i++ ) {
-    let mediaItem = mediaArr[i];
-    let mediaKey = mediaItem[0];
-    let breakpoint = window.matchMedia( mediaItem[1] );
-
-    if ( breakpoint.matches ) {
-      media[mediaKey] = true;
+export class Media {
+    constructor( params = {} ) {
+        this.options = Object.assign( {}, settings );
+        this.options = Object.assign( this.options, params );
     }
-    
-    breakpoint.addEventListener( 'change', function() {
-      if ( breakpoint.matches ) {
-        if ( i === mediaIndex ) {
-          options.in();
+
+    mediaQueryEvent( query, eventsParams = {} ) {
+        let events = Object.assign( {}, eventSet );
+        events = Object.assign( events, eventsParams );
+
+        const breakpoint = window.matchMedia( query );
+
+        function eventsFunc() {
+            if ( breakpoint.matches ) {
+                events.to();
+            } else {
+                events.from();
+            }
         }
-        media[mediaKey] = true;
-      } else {
-        if ( i > 0 ) {
-          if ( i === mediaIndex ) {
-            options.out();
-          }
-        }
-        media[mediaKey] = false;
-      }
-    });
-  }
-}
-mediaEvent();
-
-function mediaCheck( func ) {
-  let mediaArr = Object.entries( configMedia );
-
-  for ( let i = 0; i < mediaArr.length; i++ ) {
-    let mediaItem = mediaArr[i];
-    let mediaKey = mediaItem[0];
-    let breakpoint = window.matchMedia( mediaItem[1] );
-    
-    breakpoint.addEventListener( 'change', function() {
-      func();
-    });
-  }
-}
-
-export {media, mediaEvent, mediaCheck};
-
-// export default class Media {
-//   constructor( config = configMedia ) {
-//     this.config = config,
-//     this.xs = '111'
-//   }
-
-//   init() {
-//     console.log('media');
-//   }
-  
-//   // init( config = this.config ) {
-//   //   function check() {
-//   //     let index;
-
-//   //     for ( let i = 0; i < config.length; i++ ) {
-//   //       let breakpoint = window.matchMedia( config[i].breakpoint );
+        eventsFunc()
         
-//   //       if ( breakpoint.matches ) {
-//   //         index = i;
-//   //       }
+        breakpoint.addEventListener( 'change', function(e) {
+            eventsFunc()
+        });
 
-//   //       try {
-//   //         breakpoint.addEventListener( 'change', function() {
-//   //           if ( breakpoint.matches ) {
-//   //             config[i].eventInit();
-//   //           } else {
-//   //             if ( i > 0 ) {
-//   //               config[i - 1].eventInit();
-//   //             }
-//   //           }
-//   //         });
-//   //       } catch( err1 ) {
-//   //         try {
-//   //           breakpoint.addListener( function() {
-//   //             if ( breakpoint.matches ) {
-//   //               config[i].eventInit();
-//   //             } else {
-//   //               if ( i > 0 ) {
-//   //                 config[i - 1].eventInit();
-//   //               }
-//   //             }
-//   //           });
-//   //         } catch( err2 ) {
-//   //           console.error( err2 );
-//   //         }
-//   //       }
-//   //     }
+        return breakpoint.matches;
+    }
 
-//   //     if ( index || index === 0 ) {
-//   //       config[index].eventInit();
-//   //     }
-//   //   }
-//   //   check();
-//   // }
-// }
+    init( params = {} ) {
+        const context = this;
+        let options = Object.assign( {}, this.options );
+        options = Object.assign( options, params );
+
+        Object.keys( options ).forEach( function( key ) {
+            const query = `(min-width: ${ options[key] }px)`;
+
+            context[key] = function( eventsParams = {} ) {
+                return context.mediaQueryEvent( query, eventsParams )
+            }
+        })
+    }
+
+    query( query, eventsParams = {} ) {
+        return this.mediaQueryEvent( query, eventsParams )
+    }
+}

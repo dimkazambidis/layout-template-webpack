@@ -1,6 +1,7 @@
 // Modules
 import $ from 'jquery';
-import {media, mediaEvent} from './modules/media.js';
+// import {media, mediaEvent} from './modules/media.js';
+import {Media} from './modules/media.js';
 import {Popup} from './modules/popup.js';
 
 // If jQuery
@@ -11,9 +12,9 @@ import {Popup} from './modules/popup.js';
 // If Native JS
 (function() {
 
-    /** Standart Comment ******************************/
+    /** Usage Example Popups ******************************/
 
-    // Usage Example Popups
+    // Base syntax
     let testPopup = new Popup();
     testPopup.init({
         afterShow() {
@@ -24,10 +25,11 @@ import {Popup} from './modules/popup.js';
         }
     });
 
+    // Example popup to start page
     const contentElement = document.createElement( 'div' );
     contentElement.classList.add( 'cstm-popup-content' );
     contentElement.textContent = 'Custom Element';
-    
+
     let startPopup = new Popup();
     setTimeout( function() {
         startPopup.show({
@@ -39,14 +41,37 @@ import {Popup} from './modules/popup.js';
         }, 1500);
     }, 300);
 
-    // Usage Example Media
-    mediaEvent( 'lg', {
-        in: function() {
-            console.log( 'min-width: 1024px, >=1024px -', media.lg )
-        },
-        out: function() {
-            console.log( 'max-width: 1023px, >=1024px -', media.lg )
-        }
+    /** Usage Example Media ******************************/
+
+    // Initialization Media
+    let media = new Media();
+    media.init({
+        xl: 1366
     });
 
+    // Media from settings initialization
+    function toXl() {
+        console.log('To xl')
+    }
+    function fromXl() {
+        console.log('From xl')
+    }
+    media.xl({
+        to: toXl,
+        from: fromXl
+    });
+
+    // Media from any query
+    media.query( '(min-width: 768px)', {
+        to: function() {
+            console.log('To md');
+        },
+        from: function() {
+            console.log('From md');
+        }
+    })
+
+    // Usage media true/false
+    console.log( media.xl() )
+    console.log( media.query( '(min-width: 768px)' ) )
 }())
