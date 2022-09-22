@@ -54,22 +54,16 @@ popup.init({
 - show() - Open popup with parameters
 - hide() - Hide popup with parameters (callbacks)
 ```JavaScript
-// Content has Node
-const contentElement = document.createElement( 'div' );
-contentElement.classList.add( 'cstm-popup-content' );
-contentElement.textContent = 'Custom Element';
-
-let popup = new Popup();
-
 activator.addEventListener( 'click', function() {
-   popup.show({
-      contentElement: contentElement
+   popup.hide({
+      parameters...
    });
 }, false);
 
-let close = document.querySelector( '.close' )
-close.addEventListener( 'click', function() {
-   popup.hide();
+closer.addEventListener( 'click', function() {
+   popup.hide({
+      parameters...
+   });
 }, false);
 ```
 ## Gallery plugin
@@ -77,6 +71,7 @@ Plug-in extensions for the pop-up module for displaying galleries, (images and v
 ### Location
 ./src/js/modules/popup-gallery.js
 ### Using
+#### HTML
 ```html
 <div>
    <div
@@ -97,6 +92,11 @@ Plug-in extensions for the pop-up module for displaying galleries, (images and v
    </div>
 </div>
 ```
+- [data-popup-gallery] - Gallery Affiliation
+- [data-popup-src] - Path to file
+- [data-type] - Type content ('youtube' or not)
+#### JS
+The slider inside is a swiper (<https://swiperjs.com/>)
 ```JavaScript
 const gallery = new PopupGallery();
 gallery.init();
