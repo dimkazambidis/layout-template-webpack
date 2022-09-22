@@ -54,6 +54,8 @@ popup.init({
 - show() - Open popup with parameters
 - hide() - Hide popup with parameters (callbacks)
 ```JavaScript
+let popup = new Popup();
+
 activator.addEventListener( 'click', function() {
    popup.hide({
       parameters...
