@@ -15,6 +15,7 @@ npm run build
 ./src/js/modules/popup.js
 ### Using
 1. Standart
+```html
 <a
    href="#"
    data-popup // Activator default
@@ -22,3 +23,4 @@ npm run build
    data-position="center"> // Not required (default 'center'). Position popup (center, top , left, right, bottom, top left, top right, bottom left, bottom right)
   Text link
 </a>
+```
