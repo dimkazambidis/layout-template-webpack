@@ -3,6 +3,7 @@ import $ from 'jquery';
 // import {media, mediaEvent} from './modules/media.js';
 import {Media} from './modules/media.js';
 import {Popup} from './modules/popup.js';
+import {PopupGallery} from './modules/popup-gallery.js';
 
 // If jQuery
 // $(function() {
@@ -11,6 +12,13 @@ import {Popup} from './modules/popup.js';
 
 // If Native JS
 (function() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+    window.addEventListener('resize', () => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
 
     /** Usage Example Popups ******************************/
 
@@ -26,20 +34,24 @@ import {Popup} from './modules/popup.js';
     });
 
     // Example popup to start page
-    const contentElement = document.createElement( 'div' );
-    contentElement.classList.add( 'cstm-popup-content' );
-    contentElement.textContent = 'Custom Element';
+    // const contentElement = document.createElement( 'div' );
+    // contentElement.classList.add( 'cstm-popup-content' );
+    // contentElement.textContent = 'Custom Element';
 
-    let startPopup = new Popup();
-    setTimeout( function() {
-        startPopup.show({
-            contentElement: contentElement
-        });
+    // let startPopup = new Popup();
+    // setTimeout( function() {
+    //     startPopup.show({
+    //         contentElement: contentElement
+    //     });
 
-        setTimeout( function() {
-            startPopup.hide();
-        }, 1500);
-    }, 300);
+    //     setTimeout( function() {
+    //         startPopup.hide();
+    //     }, 1500);
+    // }, 300);
+
+
+    const gallery = new PopupGallery();
+    gallery.init();
 
     /** Usage Example Media ******************************/
 

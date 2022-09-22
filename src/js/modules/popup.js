@@ -246,7 +246,7 @@ export class Popup {
 }
 let closePopup = new Popup();
 
-document.addEventListener( 'keydown', function aaa(e) {
+document.addEventListener( 'keydown', function(e) {
     if ( e.code === 'Escape' && activePopups.length > 0 ) {
         const popup = activePopups[ activePopups.length - 1 ];
         const options = popup.options;

@@ -36,12 +36,42 @@ body
 .cstm-popup-main
     display: flex
     justify-content: center
-    padding: 20px
+    max-height: 100%
     width: 100%
 
 .cstm-popup-content
+    max-height: 100%
+    max-width: 100%
+    padding: 20px
+    background-color: #fff
+    overflow: auto
     opacity: 0
     transition: all .25s
+    @include media-md
+        max-width: calc(100vw - 100px)
+    &._gallery
+        padding: 0
+        background-color: transparent
+        @include media-md
+            max-width: 100%
+        .swiper-wrapper
+            align-items: center
+        .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal
+            bottom: 15px
+            height: 0
+            display: flex
+            justify-content: center
+        .swiper-button-next.swiper-button-disabled,
+        .swiper-button-prev.swiper-button-disabled
+            pointer-events: auto
+        [role=button]
+            &:focus
+                outline: none
+                border: none
+        .swiper-pagination-bullet
+            display: block
+            width: 10px
+            height: 10px
 
 .cstm-popup._visible
     .cstm-popup-content
@@ -102,6 +132,36 @@ body
     top: 0
     right: 0
 
-.cstm-popup-content
+.cstm-popup-slide-content
+    display: flex
+    align-items: center
+    justify-content: center
+    padding-left: 100px
+    padding-right: 100px
+    img
+        display: block
+        max-height: calc(100vh - 100px)
+        max-height: calc((var(--vh, 1vh) * 100) - 100px)
+        max-width: 100%
+        width: 960px
+        height: auto
+
+.cstm-popup-slide-box
+    max-width: 100%
     padding: 20px
     background-color: #fff
+
+.cstm-popup-slide-video
+    position: relative
+    width: 960px
+    max-width: 100%
+    padding-bottom: 56.25%
+    iframe
+        display: block
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        width: 100%
+        height: 100%
