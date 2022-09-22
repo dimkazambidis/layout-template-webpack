@@ -54,18 +54,50 @@ popup.init({
 - show() - Open popup with parameters
 - hide() - Hide popup with parameters (callbacks)
 ```JavaScript
+// Content has Node
 const contentElement = document.createElement( 'div' );
 contentElement.classList.add( 'cstm-popup-content' );
 contentElement.textContent = 'Custom Element';
 
-let startPopup = new Popup();
-setTimeout( function() {
-   startPopup.show({
+let popup = new Popup();
+
+activator.addEventListener( 'click', function() {
+   popup.show({
       contentElement: contentElement
    });
+}, false);
 
-   setTimeout( function() {
-      startPopup.hide();
-   }, 1500);
-}, 300);
+let close = document.querySelector( '.close' )
+close.addEventListener( 'click', function() {
+   popup.hide();
+}, false);
+```
+## Gallery plugin
+Plug-in extensions for the pop-up module for displaying galleries, (images and videos from YouTube)
+### Location
+./src/js/modules/popup-gallery.js
+### Using
+```html
+<div>
+   <div
+      data-popup-gallery="gallery"
+      data-popup-src="https://youtu.be/EU4M9gWhUHQ"
+      data-type="youtube">
+      <img src="images/preview.png">
+   </div>
+   <div
+      data-popup-gallery="gallery"
+      data-popup-src="images/img1.png">
+      <img src="images/img1.png">
+   </div>
+   <div
+      data-popup-gallery="gallery"
+      data-popup-src="images/img2.png">
+      <img src="images/img2.png">
+   </div>
+</div>
+```
+```JavaScript
+const gallery = new PopupGallery();
+gallery.init();
 ```
