@@ -57,7 +57,7 @@ popup.init({
 let popup = new Popup();
 
 activator.addEventListener( 'click', function() {
-   popup.hide({
+   popup.show({
       parameters...
    });
 }, false);
