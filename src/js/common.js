@@ -34,22 +34,22 @@ import {PopupGallery} from './modules/popup-gallery.js';
     });
 
     // Example popup to start page
-    // const contentElement = document.createElement( 'div' );
-    // contentElement.classList.add( 'cstm-popup-content' );
-    // contentElement.textContent = 'Custom Element';
+    const contentElement = document.createElement( 'div' );
+    contentElement.classList.add( 'cstm-popup-content' );
+    contentElement.textContent = 'Custom Element';
 
-    // let startPopup = new Popup();
-    // setTimeout( function() {
-    //     startPopup.show({
-    //         contentElement: contentElement
-    //     });
+    let startPopup = new Popup();
+    setTimeout( function() {
+        startPopup.show({
+            contentElement: contentElement
+        });
 
-    //     setTimeout( function() {
-    //         startPopup.hide();
-    //     }, 1500);
-    // }, 300);
+        setTimeout( function() {
+            startPopup.hide();
+        }, 1500);
+    }, 300);
 
-
+    // Example Gallery plugin for Popup module
     const gallery = new PopupGallery();
     gallery.init();
 
