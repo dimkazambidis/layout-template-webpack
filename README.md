@@ -37,9 +37,16 @@ Using attributes
     contentElement: null, // Element for Popup content (for example result Ajax request) (Node)
     text: '', // Text for Popup content (String)
     contentNotFound: 'Content not found', // If Conten Not Found text (String)
-    beforeShow( popup ) {}, // Function before show Popup
-    afterShow( popup ) {}, // Function after show Popup
-    beforeHide( popup ) {}, // Function before hide Popup
-    afterHide( popup ) {} // Function after hide Popup
+    beforeShow( popup ) {}, // Function before show Popup (argument popup - node popup element)
+    afterShow( popup ) {}, // Function after show Popup (argument popup - node popup element)
+    beforeHide( popup ) {}, // Function before hide Popup (argument popup - node popup element)
+    afterHide( popup ) {} // Function after hide Popup (argument popup - node popup element)
 }
+```
+#### Base syntax
+```JavaScript
+let popup = new Popup();
+popup.init({
+   parameters...
+});
 ```
