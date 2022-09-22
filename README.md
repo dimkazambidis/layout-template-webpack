@@ -28,7 +28,7 @@ Using attributes
 - [data-popup] - default selector for activator
 - [data-popup-src] - selector for content popup element
 - [data-position] - Not required (default 'center'). Position popup (center, top , left, right, bottom, top left, top right, bottom left, bottom right)
-#### Options
+#### Options & default parameters
 ```JavaScript
 {
     src: '', // Selector for Popup content  (String)
@@ -49,4 +49,23 @@ let popup = new Popup();
 popup.init({
    parameters...
 });
+```
+#### Methods
+- show() - Open popup with parameters
+- hide() - Hide popup with parameters (callbacks)
+```JavaScript
+const contentElement = document.createElement( 'div' );
+contentElement.classList.add( 'cstm-popup-content' );
+contentElement.textContent = 'Custom Element';
+
+let startPopup = new Popup();
+setTimeout( function() {
+   startPopup.show({
+      contentElement: contentElement
+   });
+
+   setTimeout( function() {
+      startPopup.hide();
+   }, 1500);
+}, 300);
 ```
