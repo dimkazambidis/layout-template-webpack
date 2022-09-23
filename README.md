@@ -103,3 +103,60 @@ The slider inside is a swiper (<https://swiperjs.com/>)
 const gallery = new PopupGallery();
 gallery.init();
 ```
+## Media module
+### Location
+./src/js/modules/media.js
+### Using
+#### Options & default parameters
+```JavaScript
+{
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 1024,
+    xl: 1200
+}
+```
+#### Initialization
+```JavaScript
+let media = new Media();
+media.init({
+   parameters...
+});
+```
+#### Base using
+```JavaScript
+media.xl({
+   to: function() {
+      Body function...
+   },
+   from: function() {
+      Body function...
+   }
+});
+```
+- to() - triggered when (min-width: xl)
+- from() - triggered when (max-width: xl - 1px)
+#### Media from any query
+```JavaScript
+media.query( '(min-width: 768px)', {
+   to: function() {
+      Body function...
+   },
+   from: function() {
+      Body function...
+   }
+})
+```
+The first parameter is an castom media query (example: '(max-height: 720px)')
+#### Usage media true/false
+```JavaScript
+if ( media.xl() ) { // true/false if min-width
+   Body condition...
+}
+if ( media.query( '(min-width: 768px)' ) ) {
+   Body condition...
+}
+```
+- Method with the name of the parameters (example: xl) will return true or false (min-width: xl)
+- Method query() return true or false (min-width: (parameter))
