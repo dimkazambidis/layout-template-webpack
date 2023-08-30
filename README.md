@@ -12,6 +12,7 @@ npm run build
 ## Модуль модального окна
 ### Расположение
 ./src/js/modules/popup.js
+./src/sass/modules/_popup.sass
 ### Использование
 #### По умолчанию
 Используемые атрибуты
@@ -159,3 +160,35 @@ if ( media.query( '(min-width: 768px)' ) ) { // true/false если удовле
 ```
 - Метод, имеющий название параметра (например: xl()) вернёт true или false (min-width: xl)
 - Метод query() вернёт true или false (произвольный медиазапрос (в примере min-width: 768px))
+
+## Модуль аккордеона
+### Расположение
+./src/js/modules/accordion.js
+./src/sass/modules/_accordion.sass
+### Использование
+#### HTML структура
+```html
+<div class="cstm-accordion" data-accordion-toggle>
+   <div class="cstm-accordion-list">
+      <div class="cstm-accordion-item">
+         <div class="cstm-accordion-item__header">Header 1</div>
+         <div class="cstm-accordion-item__content">
+            <div>Content 1</div>
+         </div>
+      </div>
+      <div class="cstm-accordion-item">
+         <div class="cstm-accordion-item__header">Header 2</div>
+         <div class="cstm-accordion-item__content">
+            <div>Content 2</div>
+         </div>
+      </div>
+      <div class="cstm-accordion-item">
+         <div class="cstm-accordion-item__header">Header 3</div>
+         <div class="cstm-accordion-item__content">
+            <div>Content 3</div>
+         </div>
+      </div>
+   </div>
+</div>
+```
+Атрибут data-accordion-toggle - не обзательный. Нужен, если требуется сворачиване открытого пункта, при открытии другого
