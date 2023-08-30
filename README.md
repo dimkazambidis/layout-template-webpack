@@ -4,18 +4,18 @@ Webpack layout template
 ## Installation
 npm i
 
-## Development server
+## Сервер разработки
 npm run dev
 
-## Production build
+## Билд для продакшена
 npm run build
 
-## Popup module
-### Location
+## Модуль модального окна
+### Расположение
 ./src/js/modules/popup.js
-### Using
-#### Standart
-Using attributes
+### Использование
+#### По умолчанию
+Используемые атрибуты
 ```html
 <a
    href="#"
@@ -25,34 +25,34 @@ Using attributes
    Text link
 </a>
 ```
-- [data-popup] - default selector for activator
-- [data-popup-src] - selector for content popup element
-- [data-position] - Not required (default 'center'). Position popup (center, top , left, right, bottom, top left, top right, bottom left, bottom right)
-#### Options & default parameters
+- [data-popup] - селектор для активатора попапа (по умолчанию)
+- [data-popup-src] - селектор для элемента, являющегося контентом попапа
+- [data-position] - Не обязательный (по умолчанию 'center'). Позиция попапа (center, top , left, right, bottom, top left, top right, bottom left, bottom right)
+#### Опции и параметры по умолчанию
 ```JavaScript
 {
-    src: '', // Selector for Popup content  (String)
-    activator: '[data-popup]', // Selector for Popup activator (String)
-    position: 'center', // Position (center, top, left, rigt, bottom) (String)
-    contentElement: null, // Element for Popup content (for example result Ajax request) (Node)
-    text: '', // Text for Popup content (String)
-    contentNotFound: 'Content not found', // If Conten Not Found text (String)
-    beforeShow( popup ) {}, // Function before show Popup (argument popup - node popup element)
-    afterShow( popup ) {}, // Function after show Popup (argument popup - node popup element)
-    beforeHide( popup ) {}, // Function before hide Popup (argument popup - node popup element)
-    afterHide( popup ) {} // Function after hide Popup (argument popup - node popup element)
+    src: '', // Селектор для контента попапа  (String)
+    activator: '[data-popup]', // Селектор для активатора попапа (String)
+    position: 'center', // Позиция окна попапа (center, top, left, rigt, bottom) (String)
+    contentElement: null, // Элемент для контента попапа (например, для результата ajax запроса) (Node)
+    text: '', // Текст для контента (String)
+    contentNotFound: 'Content not found', // Сообщение, если контент для попапа не задан (String)
+    beforeShow( popup ) {}, // Отработает до открытия попапа (argument popup - node popup element)
+    afterShow( popup ) {}, // Отработает после открытия попапа (аргумент popup - элемент окна попапа)
+    beforeHide( popup ) {}, // Отработает перед закрытием попапа (аргумент popup - элемент окна попапа)
+    afterHide( popup ) {} // Отработает после закрытия попапа (аргумент popup - элемент окна попапа)
 }
 ```
-#### Base syntax
+#### Базовый синтаксис
 ```JavaScript
 let popup = new Popup();
 popup.init({
    parameters...
 });
 ```
-#### Methods
-- show() - Open popup with parameters
-- hide() - Hide popup with parameters (callbacks)
+#### Методы
+- show() - Открыть попап с параметрами
+- hide() - Закрыть попап с параметрами (callbacks)
 ```JavaScript
 let popup = new Popup();
 
@@ -68,11 +68,11 @@ closer.addEventListener( 'click', function() {
    });
 }, false);
 ```
-## Gallery plugin
-Plug-in extensions for the pop-up module for displaying galleries, (images and videos from YouTube)
-### Location
+## Плагин галереи для модального окна
+Подключаемое расширение для модуля попапа для отображения галереи (изображения и видео из YouTube)
+### Расположение
 ./src/js/modules/popup-gallery.js
-### Using
+### Использование
 #### HTML
 ```html
 <div>
@@ -94,20 +94,20 @@ Plug-in extensions for the pop-up module for displaying galleries, (images and v
    </div>
 </div>
 ```
-- [data-popup-gallery] - Gallery Affiliation
-- [data-popup-src] - Path to file
-- [data-type] - Type content ('youtube' or not)
+- [data-popup-gallery] - Имя галереи, к которой пренадлежит
+- [data-popup-src] - Путь к файлу (изображение или видео)
+- [data-type] - Не обязательный. Тип контента (значение 'youtube' или можно опустить)
 #### JS
-The slider inside is a swiper (<https://swiperjs.com/>)
+Требуется подключеный плагин карусели swiper (<https://swiperjs.com/>)
 ```JavaScript
 const gallery = new PopupGallery();
 gallery.init();
 ```
-## Media module
-### Location
+## Модуль медазапросов
+### Расположение
 ./src/js/modules/media.js
-### Using
-#### Options & default parameters
+### Использование
+#### Опции и параметры по умолчанию
 ```JavaScript
 {
     xs: 0,
@@ -117,14 +117,14 @@ gallery.init();
     xl: 1200
 }
 ```
-#### Initialization
+#### Инициализация
 ```JavaScript
 let media = new Media();
 media.init({
    parameters...
 });
 ```
-#### Base using
+#### Базовый синтаксис
 ```JavaScript
 media.xl({
    to: function() {
@@ -135,9 +135,9 @@ media.xl({
    }
 });
 ```
-- to() - triggered when (min-width: xl)
-- from() - triggered when (max-width: xl - 1px)
-#### Media from any query
+- to() - срабатывает, когда (min-width: xl)
+- from() - срабатывает, когда (max-width: xl - 1px)
+#### Для любых медазапросов
 ```JavaScript
 media.query( '(min-width: 768px)', {
    to: function() {
@@ -148,15 +148,15 @@ media.query( '(min-width: 768px)', {
    }
 })
 ```
-The first parameter is an castom media query (example: '(max-height: 720px)')
-#### Usage media true/false
+Первый параметр - это пользовательский медиа-запрос (например: '(max-height: 720px)')
+#### Использование медиазапросов true/false
 ```JavaScript
-if ( media.xl() ) { // true/false if min-width
+if ( media.xl() ) { // true/false если min-width соответствует параметру xl
    ...
 }
-if ( media.query( '(min-width: 768px)' ) ) {
+if ( media.query( '(min-width: 768px)' ) ) { // true/false если удовлетворяет условию (min-width: 768px)
    ...
 }
 ```
-- Method with the name of the parameters (example: xl) will return true or false (min-width: xl)
-- Method query() return true or false (min-width: (parameter))
+- Метод, имеющий название параметра (например: xl()) вернёт true или false (min-width: xl)
+- Метод query() вернёт true или false (min-width: (условие))

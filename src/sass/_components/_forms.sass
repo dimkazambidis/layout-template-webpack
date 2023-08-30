@@ -1,1 +1,162 @@
 /** Forms */
+.form
+    &-row
+        margin-top: -20px
+    &-col
+        margin-top: 20px
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"]
+    height: 60px
+    padding: 0 20px
+    border: 1px solid $color-link
+    width: 100%
+    &:focus
+        outline: none
+
+textarea
+    padding: 18px 20px
+    border: 1px solid $color-link
+    width: 100%
+    &:focus
+        outline: none
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+textarea
+    &._error
+        background-color: #FBEEED
+        border-color: $color-danger
+        &~.form-message
+            color: $color-danger
+    &._success
+        border-color: $color-success
+
+select
+    &._error
+        &+.cstm-select-activator
+            background-color: #FBEEED
+            border-color: $color-danger
+            &::after
+                background: rgb(252,238,237)
+                background: linear-gradient(90deg, rgba(252,238,237,0) 0%, rgba(252,238,237,1) 50%, rgba(252,238,237,1) 100%)
+    &._success
+        &+.cstm-select-activator
+            border-color: $color-success
+
+.cstm-checkbox
+    display: none
+    &+label
+        position: relative
+        padding-left: 34px
+        cursor: pointer
+        .cstm-checkbox__checker
+            display: flex
+            align-items: center
+            justify-content: center
+            position: absolute
+            top: -2px
+            left: 0
+            width: 24px
+            height: 24px
+            border: 1px solid #D3DAE8
+            cursor: pointer
+            color: transparent
+            transition: border-color .3s
+            svg
+                display: block
+                width: 15px
+                height: auto
+        &:hover
+            .cstm-checkbox__checker
+                border: 1px solid $color-base
+    &:checked
+        &+label
+           .cstm-checkbox__checker
+                background-color: $color-base
+                border-color: $color-base
+                color: #fff
+    &._error
+        &+label
+            color: $color-danger
+            .cstm-checkbox__checker
+                border-color: $color-danger
+
+.cstm-radio
+    display: none
+    &+label
+        position: relative
+        padding-left: 34px
+        cursor: pointer
+        .cstm-radio__checker
+            display: flex
+            align-items: center
+            justify-content: center
+            position: absolute
+            top: -2px
+            left: 0
+            width: 24px
+            height: 24px
+            border-radius: 50%
+            border: 1px solid #D3DAE8
+            cursor: pointer
+            color: transparent
+            transition: border-color .3s
+            &::before
+                content: ""
+                display: block
+                width: 12px
+                height: 12px
+                border-radius: 50%
+                background-color: #fff
+                opacity: 0
+                transition: opacity .3s
+        &:hover
+            .cstm-radio__checker
+                border: 1px solid $color-base
+    &:checked
+        &+label
+           .cstm-radio__checker
+                background-color: $color-base
+                border-color: $color-base
+                color: #fff
+                &::before
+                    opacity: 1
+    &._error
+        &+label
+            color: $color-danger
+            .cstm-radio__checker
+                border-color: $color-danger
+
+.input-radio
+    display: flex
+    flex-wrap: wrap
+    margin-top: -10px
+    margin-left: -7.5px
+    margin-right: -7.5px
+    &__item
+        padding-left: 7.5px
+        padding-right: 7.5px
+        padding-top: 15px
+
+.form
+    &-message
+        position: relative
+        height: 0
+        overflow: visible
+        font-size: 12px
+        line-height: 1.2
+        span
+            display: block
+            position: absolute
+            top: 2px
+            left: 0
+            right: 0
+        &._error
+            color: $color-danger
+        &._success
+            color: $color-success

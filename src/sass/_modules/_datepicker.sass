@@ -1,0 +1,71 @@
+@import "../../../node_modules/js-datepicker/src/datepicker"
+    
+.datepicker-container
+    position: relative
+
+.qs-datepicker-container
+    width: 100%
+    max-width: 280px
+    top: calc( 100% + 7px ) !important
+    border: 1px solid $color-base
+    border-radius: 0
+    font-size: 16px
+    color: $color-text
+    @include media-md
+        width: 17em
+        max-width: none
+
+.qs-controls
+    background-color: #E4EDFF
+
+.qs-arrow
+    height: 2.2em
+    &.qs-left
+        &::after
+            border-right-color: $color-base
+    &.qs-right
+        &::after
+            border-left-color: $color-base
+
+.qs-square
+    height: 2.2em
+
+.qs-current
+    color: #93A1BD
+    text-decoration: none
+
+.qs-active
+    background: $color-base
+    color: #fff
+
+.qs-day
+    font-weight: 400
+    color: $color-placeholder
+
+.qs-overlay
+    background: #fff
+    color: $color-text
+    &-year
+        color: $color-text !important
+        border-bottom: 1px solid #D3DAE8 !important
+        &:focus
+            outline: none
+            border-bottom: 1px solid $color-base !important
+    .qs-submit
+        margin-left: 1.25em
+        margin-right: 1.25em
+        background: $color-base
+        color: #fff
+        text-align: center
+        border: none
+        border-radius: 0
+        &.qs-disabled
+            color: #93A1BD
+            background-color: #D3DAE8
+            opacity: 1
+
+.qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover
+    background-color: #DEE3EE
+
+.qs-month-year
+    font-weight: 400

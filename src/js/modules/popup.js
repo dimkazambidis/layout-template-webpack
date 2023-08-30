@@ -61,11 +61,15 @@ export class Popup {
                 showOptions.position = ( dataPosition ) ? dataPosition : options.position;
 
                 // Click on Activator
-                activator.addEventListener( 'click', function(e) {
+                function onClickActivator( e ) {
                     e.preventDefault();
-
                     context.show( showOptions );
-                }, false );
+                }
+
+                if ( !activator.classList.contains( 'activated' ) ) {
+                    activator.classList.add( 'activated' );
+                    activator.addEventListener( 'click', onClickActivator, false );
+                }
             })
         }
     }
@@ -127,13 +131,13 @@ export class Popup {
         const context = this;
         const templateElement = document.createElement( 'template' );
         const template = '<div class="cstm-popup ' + options.position + '">' +
-                            '<div class="cstm-popup-main">' +
-                                '<div class="cstm-popup-darker" data-popup-close></div>' +
-                            '</div>' +
+                            '<div class="cstm-popup-darker" data-popup-close></div>' +
+                            '<div class="cstm-popup-main"></div>' +
                         '</div>';
 
         templateElement.innerHTML = template;
         const popup = templateElement.content.firstChild;
+        if ( options.position && options.position !== 'center' ) popup.classList.add( 'scroll-content' )
 
         let placeholder = '';
         const contentElements = context.getContentElements();
@@ -150,6 +154,10 @@ export class Popup {
         const main = popup.querySelector( '.cstm-popup-main' );
         main.append( content );
         content.style.display = '';
+
+        main.addEventListener( 'click', function( e ) {
+            if ( e.target === main ) context.hide( {}, popup );
+        })
 
         const closers = popup.querySelectorAll( '[data-popup-close]' );
 
@@ -243,7 +251,23 @@ export class Popup {
             }
         }, 450)
     }
+
+    hideAll() {
+        const context = this;
+        if ( activePopups.length ) {
+            activePopups.forEach( popup => {
+                const options = popup.options;
+                context.hide( options, popup );
+            })
+        }
+    }
+
+    reInit() {
+        const context = this;
+        context.init( context.options );
+    }
 }
+window.Popup = Popup;
 let closePopup = new Popup();
 
 document.addEventListener( 'keydown', function(e) {

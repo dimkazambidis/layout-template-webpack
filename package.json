@@ -56,7 +56,11 @@
         "webpack-dev-server": "^4.10.1"
     },
     "dependencies": {
+        "inputmask": "^5.0.7",
         "jquery": "^3.6.1",
+        "js-datepicker": "^5.18.2",
+        "rangeslider-js": "^3.2.5",
+        "smoothscroll-polyfill": "^0.4.4",
         "swiper": "^8.4.2"
     }
 }

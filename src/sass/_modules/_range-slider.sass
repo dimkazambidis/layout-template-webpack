@@ -1,0 +1,106 @@
+.range
+    &-wrapper
+        position: relative
+        height: 60px
+        overflow: visible
+        padding-bottom: 24px
+        background-color: #fff
+        border: 1px solid $color-base
+        transition: border-color .3s
+    &__placeholder
+        display: flex
+        align-items: center
+        position: absolute
+        top: 0
+        left: 20px
+        bottom: 0
+        width: calc(100% - 40px)
+        line-height: 1
+        transform: scale(0.75) translateY(-70%)
+        transform-origin: left
+        color: $color-base
+        span
+            position: relative
+            padding: 0 5px
+            margin-left: -5px
+            background-color: #fff
+    &__input
+        position: absolute !important
+        top: 0 !important
+        left: 20px !important
+        bottom: 0 !important
+        display: inline-block !important
+        padding: 0 !important
+        border: none !important
+        line-height: 1 !important
+        width: auto !important
+        max-width: calc(100% - 40px) !important
+        background-color: transparent !important
+        &:focus
+            outline: none
+    &-checkpoints
+        position: relative
+        margin-top: 10px
+        // margin-left: 10px
+        // margin-right: 10px
+        height: 12px
+        &__start,
+        &__end,
+        &__my
+            position: absolute
+            top: 0
+            font-size: 14px
+            line-height: 1.2
+            color: $color-link
+        &__start
+            left: 0
+        &__end
+            right: 0
+        &__my
+            display: none
+            @include media-lg
+                display: block
+            &-marker
+                display: none
+                position: absolute
+                top: -14.5px
+                width: 7px
+                height: 7px
+                transform: translateX( -3.5px )
+                border-radius: 50%
+                background-color: #fff
+                border: 1px solid #D3DAE8
+                @include media-md
+                    display: block
+                &._active
+                    border-color: $color-base
+    
+.rangeslider
+    position: absolute
+    top: calc(100% + 1px)
+    left: 0
+    right: 0
+    // margin-left: 20px
+    // margin-right: 20px
+    touch-action: none
+    &__fill
+        position: relative
+        top: -1px
+        height: 2px
+        background-color: $color-accent
+        border-radius: 2px
+        // &__bg
+        //     margin-left: -20px
+        //     margin-right: -20px
+    &__handle
+        position: relative
+        top: -2px
+        width: 16px
+        height: 16px
+        border-radius: 50%
+        // background-color: #fff
+        background-color: $color-accent
+        border: 2px solid $color-accent
+        box-shadow: 1px 1px 4px rgba(66, 111, 208, 0.25)
+        cursor: pointer
+        z-index: 1

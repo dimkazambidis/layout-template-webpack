@@ -1,0 +1,96 @@
+.field-anim
+    &-label
+        display: block
+        position: relative
+        width: 100%
+        // overflow: hidden
+        input,
+        textarea
+            &:focus,
+            &._fill,
+            &[type="tel"],
+            &.input-passport,
+            &.input-passport-code,
+            &.input-snils,
+            &input[data-datepicker]
+                &~.field-anim-placeholder
+                    color: $color-base
+                    transform: scale(0.75) translateY(-70%)
+                    // width: 100%
+            &~.field-anim-placeholder
+                display: flex
+                align-items: center
+                position: absolute
+                top: 0
+                left: 20px
+                width: calc(100% - 40px)
+                height: 60px
+                line-height: 1
+                cursor: text
+                color: $color-placeholder
+                transition: transform .3s, color .3s
+                transform-origin: left
+                span
+                    position: relative
+                    padding: 0 5px
+                    margin-left: -5px
+                    background-color: #fff
+        input
+            &~.field-anim-placeholder
+                // top: calc(50% - 7px)
+                display: flex
+                align-items: center
+                top: 0
+                bottom: 0
+                pointer-events: none
+        textarea
+            padding-top: 17px
+        &._file
+            position: relative
+            display: inline-flex
+            align-items: center
+            flex-wrap: wrap
+            width: 100%
+            height: 50px
+            padding-top: 20px
+            padding-left: 12px
+            padding-right: 40px
+            border: 1px solid #D3DAE8
+            border-radius: 8px
+            background-color: #fff
+            transition: border-color .3s, background-color .3s
+            font-weight: 300
+            cursor: pointer
+            @include media-md
+                height: 60px
+                padding-left: 20px
+                padding-right: 50px
+            &:focus
+                outline: none
+                border-color: $color-base
+            .field-file-text
+                position: relative
+                white-space: nowrap
+                width: 100%
+                overflow: hidden
+                &::after
+                    content: ""
+                    display: block
+                    position: absolute
+                    top: 0
+                    right: 0
+                    bottom: 0
+                    width: 10px
+                    background: rgb(255, 255, 255)
+                    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 100%)
+            .field-file-btn
+                display: flex
+                align-items: center
+                position: absolute
+                top: 0
+                right: 20px
+                bottom: 0
+                color: $color-base
+                text-decoration: underline
+                font-size: 14px
+                font-weight: 300

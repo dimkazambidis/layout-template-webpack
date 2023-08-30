@@ -1,0 +1,47 @@
+/**  Tabs */
+
+.cstm-tabs
+    &__btn
+        &._current
+            font-weight: 700
+    &__content
+        overflow: hidden
+    &-select
+        position: relative
+        &__activator
+            display: flex
+            align-items: center
+            position: relative
+            padding-left: 20px
+            padding-right: 1em
+            height: 60px
+            border: 1px solid $color-base
+            &::after
+                content: ""
+                display: block
+                position: absolute
+                top: calc(30px - 0.5em)
+                right: 20px
+                width: 1em
+                height: 1em
+                background-image: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7L13 1' stroke='currentColor' stroke-width='2' stroke-linecap='round'%3E%3C/path%3E%3C/svg%3E")
+                background-repeat: no-repeat
+                background-size: contain
+                background-position: 50% 50%
+        .cstm-tabs-nav
+            position: absolute
+            top: calc(100% + 2px)
+            left: 0
+            right: 0
+            max-height: 170px
+            overflow: auto
+            background-color: #fff
+            border: 1px solid $color-base
+            [class^="col"], [class^="row"]
+                margin: 0
+                padding: 0
+        .cstm-tabs__btn
+            display: block
+            padding: 5px 20px
+        &+.cstm-tabs-body
+            margin-top: 20px
