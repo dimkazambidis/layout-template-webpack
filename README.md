@@ -24,19 +24,19 @@ npm run build
    Text link
 </a>
 ```
-- [data-popup] - селектор для активатора попапа (по умолчанию)
+- [data-popup] - селектор для активатора попапа (например ссылка, кнопка и тд). По умолчаню плагин ищет именно элемент с атрибутом "data-popup"
 - [data-popup-src] - селектор для элемента, являющегося контентом попапа
 - [data-position] - Не обязательный (по умолчанию 'center'). Позиция попапа (center, top , left, right, bottom, top left, top right, bottom left, bottom right)
 #### Опции и параметры по умолчанию
 ```JavaScript
 {
-    src: '', // Селектор для контента попапа  (String)
+    src: '', // Селектор для контента попапа (String)
     activator: '[data-popup]', // Селектор для активатора попапа (String)
     position: 'center', // Позиция окна попапа (center, top, left, rigt, bottom) (String)
     contentElement: null, // Элемент для контента попапа (например, для результата ajax запроса) (Node)
     text: '', // Текст для контента (String)
     contentNotFound: 'Content not found', // Сообщение, если контент для попапа не задан (String)
-    beforeShow( popup ) {}, // Отработает до открытия попапа (argument popup - node popup element)
+    beforeShow( popup ) {}, // Отработает до открытия попапа (аргумент popup - node popup element)
     afterShow( popup ) {}, // Отработает после открытия попапа (аргумент popup - элемент окна попапа)
     beforeHide( popup ) {}, // Отработает перед закрытием попапа (аргумент popup - элемент окна попапа)
     afterHide( popup ) {} // Отработает после закрытия попапа (аргумент popup - элемент окна попапа)
@@ -158,4 +158,4 @@ if ( media.query( '(min-width: 768px)' ) ) { // true/false если удовле
 }
 ```
 - Метод, имеющий название параметра (например: xl()) вернёт true или false (min-width: xl)
-- Метод query() вернёт true или false (min-width: (условие))
+- Метод query() вернёт true или false (произвольный медиазапрос (в примере min-width: 768px))
