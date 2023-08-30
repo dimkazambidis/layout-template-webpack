@@ -11,8 +11,8 @@ npm run build
 
 ## Модуль модального окна
 ### Расположение
-./src/js/modules/popup.js
-./src/sass/modules/_popup.sass
+- ./src/js/modules/popup.js
+- ./src/sass/modules/_popup.sass
 ### Использование
 #### По умолчанию
 Используемые атрибуты
@@ -163,8 +163,8 @@ if ( media.query( '(min-width: 768px)' ) ) { // true/false если удовле
 
 ## Модуль аккордеона
 ### Расположение
-./src/js/modules/accordion.js
-./src/sass/modules/_accordion.sass
+- ./src/js/modules/accordion.js
+- ./src/sass/modules/_accordion.sass
 ### Использование
 #### HTML структура
 ```html
