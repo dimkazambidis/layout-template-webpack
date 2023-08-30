@@ -1,7 +1,6 @@
 # layout-template-webpack
-Webpack layout template
-
-## Installation
+Webpack шаблон для вёрстки
+## Установка пакетов
 npm i
 
 ## Сервер разработки
