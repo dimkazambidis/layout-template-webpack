@@ -257,7 +257,7 @@ export class Select {
     destroy( select ) {
         const selectsList = ( !select ) ? document.querySelectorAll( 'select.cstm-select' ) : [select];
         selectsList.forEach( select => {
-            select.classList.remove( 'initialized' );
+            select.classList.remove( 'select_initialized' );
             select.style.display = '';
 
             if ( select.activatorElement && select.dropElement ) {
@@ -272,9 +272,12 @@ export class Select {
         this.init( select );
     }
 
-    update( select ) {
-        this.init( select );
-    }
+    // update( select ) {
+    //     const selectsList = ( !select ) ? document.querySelectorAll( 'select.cstm-select' ) : [select];
+    //     selectsList.forEach( select => {
+
+    //     })
+    // }
 }
 window.select = new Select();
 

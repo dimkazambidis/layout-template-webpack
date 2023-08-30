@@ -192,3 +192,57 @@ if ( media.query( '(min-width: 768px)' ) ) { // true/false если удовле
 </div>
 ```
 Атрибут "data-accordion-toggle" - не обзательный. Нужен, если требуется сворачиване открытого пункта, при открытии другого
+
+## Формы:
+## Селекты
+### Расположение
+- ./src/js/modules/select.js
+- ./src/sass/modules/_select.sass
+### Использование
+#### HTML стандартный селект
+```html
+<select class="cstm-select" data-label="Label for select" required>
+   <option value="" selected>Select option</option>
+   <option value="1">Option 1</option>
+   <option value="2">Option 2</option>
+   <option value="3">Option 3</option>
+</select>
+```
+- Если нужно скрыть опцию, можно добавить для option атрибут disabled
+- Атрибут "data-label" добавит label для селекта
+#### HTML multiple селект
+```html
+<select class="cstm-select" data-label="Label for select" multiple required>
+   <option value="" selected disabled>Select option</option>
+   <option value="1">Option 1</option>
+   <option value="2">Option 2</option>
+   <option value="3">Option 3</option>
+</select>
+```
+- Если нужно скрыть опцию, можно добавить для option атрибут disabled
+- Атрибут "data-label" добавит label для селекта
+- Атрибут "multiple" добавит возможность множественного выбора
+#### JS методы
+- init( select ) - Инициализирует новый экземпляр
+- destroy( select ) - Уничтожит экземпляр
+- reInit( select ) - Уничтожит и заново переинициализирует экземпляр (например, когда нужно обновить при изменении самого селекта)
+
+```JavaScript
+// Инициализация
+select.init() // По умолчанию, проинициализирует все селекты с классом "cstm-select"
+
+const select = document.querySelector( '#select-id' ) // Можно набор document.querySelectorAll( '.select-class' )
+select.init( select ) // Проинициализирует селект(ы) с заданным селектором
+
+// Уничтожение
+select.destroy() // Уничтожит все кастомные селекты с классом "cstm-select"
+
+const select = document.querySelector( '#select-id' ) // Можно набор document.querySelectorAll( '.select-class' )
+select.destroy( select ) // Уничтожит кастомные селект(ы) с заданным селектором
+
+// Переинициализация
+select.reInit() // Переинициализирует все селекты
+
+const select = document.querySelector( '#select-id' ) // Можно набор document.querySelectorAll( '.select-class' )
+select.init( select ) // Переинициализирует селект(ы) с заданным селектором
+```
